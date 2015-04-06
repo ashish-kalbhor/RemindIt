@@ -14,24 +14,36 @@ public class GetStarted extends Activity
 	private static String noteString = null;
 	private static boolean isAlarmSet = false;
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_get_started);
-		
-		final EditText reminderNote = (EditText)findViewById(R.id.textNote);
-		final Button setReminder = (Button)findViewById(R.id.btReminder);
-		final CheckBox setAlarm = (CheckBox)findViewById(R.id.chkSetAlarm);
-		
-		setReminder.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				GetStarted.noteString = reminderNote.getText().toString();
-				GetStarted.isAlarmSet = setAlarm.isSelected();
-				reminderNote.setText("");
-				setAlarm.setChecked(false);
-			}
-		});
+	protected void onCreate(Bundle savedInstanceState) 
+	{
+        	super.onCreate(savedInstanceState);
+        	setContentView(R.layout.activity_get_started);
+        	
+        	final EditText reminderNote = (EditText)findViewById(R.id.textNote);
+        	final Button setReminder = (Button)findViewById(R.id.btReminder);
+        	final Button when = (Button)findViewById(R.id.btWhen);
+        	final CheckBox setAlarm = (CheckBox)findViewById(R.id.chkSetAlarm);
+        	
+        	when.setOnClickListener(new OnClickListener() 
+        	{
+				@Override
+				public void onClick(View arg0) 
+				{
+					// Load a time picker
+				}
+			});
+        	
+        	setReminder.setOnClickListener(new OnClickListener() 
+        	{	
+        		@Override
+        		public void onClick(View v) 
+        		{
+        			GetStarted.noteString = reminderNote.getText().toString();
+        			GetStarted.isAlarmSet = setAlarm.isSelected();
+        			reminderNote.setText("");
+        			setAlarm.setChecked(false);
+        		}
+        	});
 		
 	}
 

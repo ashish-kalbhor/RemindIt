@@ -5,7 +5,7 @@
     <string name="hello">Hello !</string>
     <string name="action_settings">Settings</string>
     <string name="reminder_note">Reminder Note</string>
-    <string name="when">When to remind?</string>
+    <string name="when">When?</string>
     <string name="set_alarm">Shall I set alarm?</string>
     <string name="set_reminder">Set Reminder</string>
 
