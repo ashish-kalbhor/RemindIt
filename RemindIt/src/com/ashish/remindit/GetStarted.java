@@ -4,10 +4,12 @@ import java.sql.Date;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.DateTimeKeyListener;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -75,8 +77,18 @@ public class GetStarted extends Activity
         		{
         			noteString = reminderNote.getText().toString();
         			isAlarmSet = setAlarm.isSelected();
+        			Toast.makeText(getApplicationContext(), noteString + myCalendar.getTime() + isAlarmSet, Toast.LENGTH_LONG).show();
         			reminderNote.setText("");
         			setAlarm.setChecked(false);
+        			
+        			Intent intent = new Intent(GetStarted.this, ReminderAction.class);
+        			PendingIntent pIntent = PendingIntent.getService(GetStarted.this, 0, intent,
+        					PendingIntent.FLAG_UPDATE_CURRENT);
+
+        			AlarmManager alarmmgr = (AlarmManager)getSystemService(ALARM_SERVICE);
+        			
+        			alarmmgr.setRepeating(AlarmManager.RTC_WAKEUP, myCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pIntent);
+
         		}
         	});
 		
