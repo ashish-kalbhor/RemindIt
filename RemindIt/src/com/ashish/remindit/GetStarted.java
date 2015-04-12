@@ -8,7 +8,9 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.app.WallpaperManager;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -48,7 +50,7 @@ public class GetStarted extends Activity
 	protected void onCreate(Bundle savedInstanceState) 
 	{
         	super.onCreate(savedInstanceState);
-        	setContentView(R.layout.activity_get_started);
+        	setContentView(R.layout.activity_get_started);   
         	
         	final EditText reminderNote = (EditText)findViewById(R.id.textNote);
         	final Button setReminder = (Button)findViewById(R.id.btReminder);
@@ -77,6 +79,7 @@ public class GetStarted extends Activity
         		{
         			noteString = reminderNote.getText().toString();
         			isAlarmSet = setAlarm.isSelected();
+        			myCalendar.set(Calendar.SECOND, 0);
         			Toast.makeText(getApplicationContext(), noteString + myCalendar.getTime() + isAlarmSet, Toast.LENGTH_LONG).show();
         			reminderNote.setText("");
         			setAlarm.setChecked(false);

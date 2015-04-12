@@ -17,6 +17,7 @@ package com.ashish.remindit;
 import java.io.IOException;
 import java.io.InputStream;
 
+import android.R.drawable;
 import android.app.Activity;
 import android.app.Service;
 import android.app.WallpaperManager;
@@ -24,6 +25,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.IBinder;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
@@ -45,19 +48,34 @@ public class ReminderAction extends Service
 		try 
 		{
 			input = getAssets().open("image.jpg");
-			Bitmap bitmap = BitmapFactory.decodeStream(input);
-	
-		    //DisplayMetrics metrics = new DisplayMetrics(); 
-		    //((Activity)getBaseContext()).getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		    // get the height and width of screen 
-		    //int height = metrics.heightPixels; 
-		    //int width = metrics.widthPixels;
+			Bitmap reminderBitmap = BitmapFactory.decodeStream(input);
 		           
 		    WallpaperManager wallpaperManager = WallpaperManager.getInstance(this); 
-		    wallpaperManager.setBitmap(bitmap);
-		    //wallpaperManager.suggestDesiredDimensions(width, height);
+		    final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+		    Bitmap originalBitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();        	
+		    
+		    wallpaperManager.setBitmap(reminderBitmap);
+		    
 		    Toast.makeText(this, "Wallpaper Set", Toast.LENGTH_SHORT).show();
-	    } catch (IOException e) 
+		    
+		    Thread thread = new Thread(){
+		    	@Override
+		    	public void run() {
+		    		try {
+		    			synchronized (this) {
+						
+							wait(10000);
+						} 
+		    		}catch (InterruptedException e) {
+							e.printStackTrace();
+					}
+		    	}
+		    };
+		    thread.start();
+		    
+		    wallpaperManager.setBitmap(originalBitmap);
+		    
+		} catch (IOException e) 
 	    {
 	    	e.printStackTrace();
 	    }
